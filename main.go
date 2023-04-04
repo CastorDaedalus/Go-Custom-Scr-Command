@@ -4,7 +4,6 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	"syscall"
 
 	"github.com/ncruces/zenity"
 	"golang.org/x/sys/windows/registry"
@@ -91,20 +90,4 @@ func ChkErr(err error) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-func ChkRegistryValueFound(err error) bool {
-	if err != nil {
-		if pe, ok := err.(*os.PathError); ok {
-			if errno, ok := pe.Err.(syscall.Errno); ok {
-				if errno == syscall.ERROR_FILE_NOT_FOUND {
-					return false
-				}
-			}
-		} else {
-			return false
-		}
-		return false
-	}
-	return true
 }
